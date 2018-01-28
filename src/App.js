@@ -141,11 +141,11 @@ class App extends Component {
             </CardContent>
             <CardContent>
               <Typography className={classes.title}>Data Samples</Typography>
-              <Typography id="min-cost-logger" type="headline" component="h2">
+              
                 <pre>
                   {JSON.stringify(data.filter((x, i) => i < 3 ), null, 4)}
                 </pre>
-              </Typography>
+ 
             </CardContent>
         </div>
         <div className={classes.trainRowRight}>
