@@ -7,7 +7,7 @@ import {
 } from 'deeplearn';
 import {show} from './chart';
 
-export const train = async (_inputs, _labels, learningRate, hiddenLayersSizes, epochs) => {
+export const train = async (_inputs, _labels, learningRate, hiddenLayersSizes, epochs, options) => {
     const math = ENV.math;
     const g = new Graph();
     const forwardProp = createForwardProp(g);
@@ -53,6 +53,7 @@ export const train = async (_inputs, _labels, learningRate, hiddenLayersSizes, e
     const errorCost = 1000000000000000000000000;
     let minCost = errorCost;
     const chart = show(costList);
+    const {costComponent, minCostComponent} = options;
 
     for (let i = 0; i < NUM_EPOCHS; i++) {
         const cost = session.train(costTensor, feedEntries, batchSize, optimizer, CostReduction.MEAN);
@@ -62,7 +63,7 @@ export const train = async (_inputs, _labels, learningRate, hiddenLayersSizes, e
 
         if (i % 100 === 0) {
             console.log('cost epoch(' + i + '): ' + costVal);
-            document.getElementById('cost-value').innerHTML = 'cost: ' + costVal;
+            document.getElementById(costComponent).innerHTML = costVal;
         }
 
         if (i % 10 === 0) {
@@ -71,7 +72,7 @@ export const train = async (_inputs, _labels, learningRate, hiddenLayersSizes, e
 
         if(costVal < minCost) {
             minCost = costVal;
-            document.getElementById('min-cost').innerHTML = 'min cost: ' + minCost + 'at epoch ' + i;
+            document.getElementById(minCostComponent).innerHTML = 'Ep ['+ i +']' + minCost;
         }
     }
 
